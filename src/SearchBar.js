@@ -9,7 +9,11 @@ class SearchBar extends Component {
     }
 
     render() {
-
+        return (
+            <form>
+                <input value={this.state.text}></input>
+            </form>
+        );
     }
 }
 

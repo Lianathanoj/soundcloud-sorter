@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import './CategorySelector';
-import './SearchBar';
-import './SongContainer';
+import CategorySelector from './CategorySelector';
+import SearchBar from './SearchBar';
+import SongContainer from './SongContainer';
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +22,9 @@ class App extends Component {
           <h2>SoundCloud Specific Song Sorter</h2>
         </div>
         <p>
-          Put songs here
+          <SearchBar />
+          <CategorySelector />
+          <SongContainer />
         </p>
       </div>
     );

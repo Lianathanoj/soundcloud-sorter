@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class SongContainer extends Component {
     render() {
-        return ;
+        return <p>test</p>;
     }
 }
 
