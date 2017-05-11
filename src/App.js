@@ -18,6 +18,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
+          <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
           <img src={logo} className="App-logo" alt="logo" />
           <h2>SoundCloud Specific Song Sorter</h2>
         </div>
