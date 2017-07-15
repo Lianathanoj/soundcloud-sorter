@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import CategorySelector from './CategorySelector';
 import SearchBar from './SearchBar';
-import SongContainer from './SongContainer';
+import WidgetContainer from './WidgetContainer';
 var SC = require('soundcloud');
 
 const DEFAULT = "default";
@@ -54,7 +54,6 @@ class App extends Component {
   }
 
   getTracks = () => {
-      console.log('test');
       SC.resolve("https://soundcloud.com/" + this.state.searchText + "/tracks").then(returnedTracks => {
           this.setState({ tracks: returnedTracks });
           this.sortTracks();
@@ -65,7 +64,7 @@ class App extends Component {
   createWidgets = () => {
       for (var i = this.state.numSongs; i < i + this.state.numSongsToLoad; i++) {
           SC.oEmbed(this.state.tracks[i].permalink_url, {maxheight: 200}).then(widget => {
-              this.state.widgets.append(widget);
+              this.setState({ widgets: [...this.state.widgets, widget] });
           });
       }
       this.setState({ numSongs: this.state.numSongs + this.state.numSongsToLoad });
@@ -78,13 +77,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+          <script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h2>SoundCloud Specific Song Sorter</h2>
         </div>
         <SearchBar handleChange={this.handleSearchBarChange} handleSubmit={this.handleSearchBarSubmit} searchText={this.state.searchText}/>
         <CategorySelector handleChange={this.handleCategorySelectorChange} currentSelection={this.state.sortType}/>
-        <SongContainer widgets={this.state.widgets}/>
+        <WidgetContainer widgets={this.state.widgets}/>
       </div>
     );
   }
