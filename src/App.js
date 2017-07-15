@@ -6,13 +6,19 @@ import SearchBar from './SearchBar';
 import SongContainer from './SongContainer';
 var SC = require('soundcloud');
 
+const DEFAULT = "default";
+const MOST_FAVORITES = "favorites";
+const MOST_PLAYBACKS = "playbacks";
+
 class App extends Component {
   constructor(props) {
       super(props);
       this.state = {
           numSongs: 0,
-          sortType: "default",
-          searchText: ""
+          numSongsToLoad: 5,
+          sortType: DEFAULT,
+          searchText: "",
+          widgets: []
       };
       this.initializeSoundCloud();
   }
@@ -29,15 +35,45 @@ class App extends Component {
   }
 
   handleSearchBarSubmit = () => {
-      this.testLoadWidgets();
+      this.getTracks();
       this.setState({ searchText: "" });
   }
 
-  testLoadWidgets = () => {
-      SC.resolve("https://soundcloud.com/" + this.state.searchText + "/tracks").then(function(tracks) {
-          console.log(tracks);
+  handleCategorySelectorChange = (category) => {
+      this.setState({ sortType: category });
+      this.sortTracks();
+      this.createWidgets();
+  }
+
+  sortTracks = () => {
+      if (this.state.sortType === MOST_FAVORITES) {
+          this.state.tracks.sort(this.sortFavorites);
+      } else if (this.state.sortType === MOST_PLAYBACKS) {
+          this.state.tracks.sort(this.sortPlaybacks);
+      }
+  }
+
+  getTracks = () => {
+      console.log('test');
+      SC.resolve("https://soundcloud.com/" + this.state.searchText + "/tracks").then(returnedTracks => {
+          this.setState({ tracks: returnedTracks });
+          this.sortTracks();
+          this.createWidgets();
       });
   }
+
+  createWidgets = () => {
+      for (var i = this.state.numSongs; i < i + this.state.numSongsToLoad; i++) {
+          SC.oEmbed(this.state.tracks[i].permalink_url, {maxheight: 200}).then(widget => {
+              this.state.widgets.append(widget);
+          });
+      }
+      this.setState({ numSongs: this.state.numSongs + this.state.numSongsToLoad });
+  }
+
+  sortFavorites = (x, y) => y.favoritings_count - x.favoritings_count;
+
+  sortPlaybacks = (x, y) => y.playback_count - x.playback_count;
 
   render() {
     return (
@@ -47,9 +83,8 @@ class App extends Component {
           <h2>SoundCloud Specific Song Sorter</h2>
         </div>
         <SearchBar handleChange={this.handleSearchBarChange} handleSubmit={this.handleSearchBarSubmit} searchText={this.state.searchText}/>
-        <CategorySelector />
-        <SongContainer />
-        <button onClick={this.testLoadWidgets}>testing</button>
+        <CategorySelector handleChange={this.handleCategorySelectorChange} currentSelection={this.state.sortType}/>
+        <SongContainer widgets={this.state.widgets}/>
       </div>
     );
   }
