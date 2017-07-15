@@ -1,27 +1,26 @@
 import React, { Component } from 'react';
+var axios = require('axios');
 
 class SearchBar extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            text: ""
-        }
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
+        if (this.props.searchText.length !== 0) {
+            this.props.handleSubmit();
+        }
     }
 
-    handleChange(e) {
-        this.setState({text: e.target.value});
+    handleChange = (e) => {
+        this.props.handleChange(e.target.value);
     }
 
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <input placeholder="Input an artist's profie URL." value={this.state.text} onChange={this.handleChange} />
+                <input placeholder="Input an artist's profile URL." value={this.props.searchText} onChange={this.handleChange} />
                 <input type="submit" value="Submit" />
             </form>
         );
