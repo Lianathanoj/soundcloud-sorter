@@ -42,6 +42,16 @@ class App extends Component {
       this.setState({ numSongsToLoad: number });
   }
 
+  handleNumberInputSubmit = (number) => {
+      if (this.state.searchText.length !== 0) {
+          if (this.state.tracks == null) {
+              this.getTracks();
+          } else {
+              this.createWidgets();
+          }
+      }
+  }
+
   handleCategorySelectorChange = (category) => {
       this.setState({ sortType: category, widgetsMap: {}, numSongs: 0 },
           () => {
@@ -94,7 +104,7 @@ class App extends Component {
         </div>
         <SearchBar handleChange={this.handleSearchBarChange} handleSubmit={this.handleSearchBarSubmit} searchText={this.state.searchText}/>
         <CategorySelector handleChange={this.handleCategorySelectorChange} currentSelection={this.state.sortType}/>
-        <NumberInput handleChange={this.handleNumberInputChange} numSongsToLoad={this.state.numSongsToLoad}/>
+        <NumberInput handleChange={this.handleNumberInputChange} handleSubmit={this.handleNumberInputSubmit} numSongsToLoad={this.state.numSongsToLoad}/>
         <WidgetContainer numSongs={this.state.numSongs} widgetsMap={this.state.widgetsMap}/>
       </div>
     );

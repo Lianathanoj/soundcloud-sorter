@@ -7,14 +7,20 @@ class NumberInput extends Component {
 
     handleChange = (e) => {
         e.target.value == null ? this.props.handleChange(0) : this.props.handleChange(e.target.value);
-
     }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.handleSubmit();
+    }
+
 
     render() {
         return (
-            <div>
+            <form onSubmit={this.handleSubmit}>
                 <input placeholder="Number of Songs" value={this.props.numSongsToLoad} onChange={this.handleChange} />
-            </div>
+                <input type="submit" value="Submit" />
+            </form>
         );
     }
 }
