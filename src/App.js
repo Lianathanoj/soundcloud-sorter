@@ -4,6 +4,7 @@ import './App.css';
 import CategorySelector from './CategorySelector';
 import SearchBar from './SearchBar';
 import WidgetContainer from './WidgetContainer';
+import NumberInput from './NumberInput';
 var SC = require('soundcloud');
 
 const DEFAULT = "default";
@@ -36,7 +37,11 @@ class App extends Component {
 
   handleSearchBarSubmit = () => {
       this.getTracks();
-      this.setState({ searchText: "" });
+      // this.setState({ searchText: "" });
+  }
+
+  handleNumberInputChange = (number) => {
+      this.setState({ numSongsToLoad: number });
   }
 
   handleCategorySelectorChange = (category) => {
@@ -54,36 +59,39 @@ class App extends Component {
   }
 
   getTracks = () => {
+      console.log('test');
       SC.resolve("https://soundcloud.com/" + this.state.searchText + "/tracks").then(returnedTracks => {
-          this.setState({ tracks: returnedTracks });
-          this.sortTracks();
-          this.createWidgets();
-      });
+          this.setState({ tracks: returnedTracks })
+          // this.sortTracks();
+          // this.createWidgets();
+      }).then(() => this.sortTracks()).then(() => this.createWidgets());
   }
 
   createWidgets = () => {
-      for (var i = this.state.numSongs; i < i + this.state.numSongsToLoad; i++) {
+      let numSongsAfterLoad = ~~this.state.numSongs + ~~this.state.numSongsToLoad;
+      for (let i = this.state.numSongs; i < numSongsAfterLoad; i++) {
           SC.oEmbed(this.state.tracks[i].permalink_url, {maxheight: 200}).then(widget => {
-              this.setState({ widgets: [...this.state.widgets, widget] });
+              this.setState({widgets: [...this.state.widgets, widget]});
           });
       }
-      this.setState({ numSongs: this.state.numSongs + this.state.numSongsToLoad });
+      this.setState({ numSongs: numSongsAfterLoad });
+      console.log('num songs: ' + this.state.numSongs);
   }
 
   sortFavorites = (x, y) => y.favoritings_count - x.favoritings_count;
 
   sortPlaybacks = (x, y) => y.playback_count - x.playback_count;
-
+    // <script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
   render() {
     return (
       <div className="App">
-          <script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h2>SoundCloud Specific Song Sorter</h2>
         </div>
         <SearchBar handleChange={this.handleSearchBarChange} handleSubmit={this.handleSearchBarSubmit} searchText={this.state.searchText}/>
         <CategorySelector handleChange={this.handleCategorySelectorChange} currentSelection={this.state.sortType}/>
+        <NumberInput handleChange={this.handleNumberInputChange} numSongsToLoad={this.state.numSongsToLoad}/>
         <WidgetContainer widgets={this.state.widgets}/>
       </div>
     );

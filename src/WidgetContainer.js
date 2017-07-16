@@ -6,10 +6,6 @@ class WidgetContainer extends Component {
         super(props);
     }
 
-    testClick = (e) => {
-        console.log(this.props);
-    }
-
     render() {
         return (
             <div>
