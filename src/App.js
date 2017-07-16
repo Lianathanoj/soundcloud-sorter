@@ -7,7 +7,6 @@ import WidgetContainer from './WidgetContainer';
 import NumberInput from './NumberInput';
 var SC = require('soundcloud');
 
-const DEFAULT = "default";
 const MOST_FAVORITES = "favorites";
 const MOST_PLAYBACKS = "playbacks";
 
@@ -17,7 +16,7 @@ class App extends Component {
       this.state = {
           numSongs: 0,
           numSongsToLoad: 5,
-          sortType: DEFAULT,
+          sortType: MOST_FAVORITES,
           searchText: "",
           widgetsMap: {}
       };
@@ -56,9 +55,7 @@ class App extends Component {
   }
 
   sortTracks = () => {
-      if (this.state.sortType === DEFAULT) {
-          this.setState({ tracks: this.state.defaultTracks });
-      } else if (this.state.sortType === MOST_FAVORITES) {
+      if (this.state.sortType === MOST_FAVORITES) {
           this.state.tracks.sort(this.sortFavorites);
       } else if (this.state.sortType === MOST_PLAYBACKS) {
           this.state.tracks.sort(this.sortPlaybacks);
@@ -67,7 +64,7 @@ class App extends Component {
 
   getTracks = () => {
       SC.resolve("https://soundcloud.com/" + this.state.searchText + "/tracks")
-          .then(returnedTracks => this.setState({ tracks: returnedTracks, defaultTracks: returnedTracks }))
+          .then(returnedTracks => this.setState({ tracks: returnedTracks }))
           .then(() => this.sortTracks())
           .then(() => this.createWidgets());
   }
@@ -78,7 +75,7 @@ class App extends Component {
           SC.oEmbed(this.state.tracks[i].permalink_url, {maxheight: 200}).then(widget => {
               let widgetsMap = this.state.widgetsMap;
               widgetsMap[i] = widget;
-              this.setState({widgetsMap: widgetsMap});
+              this.setState({ widgetsMap: widgetsMap });
           });
       }
       this.setState({ numSongs: numSongsAfterLoad });

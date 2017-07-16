@@ -12,7 +12,6 @@ class CategorySelector extends Component {
     render() {
         return (
             <select value={this.props.currentSelection} onChange={this.handleChange}>
-                <option value="default">Default</option>
                 <option value="favorites">Sort by most favorites</option>
                 <option value="playbacks">Sort by most playbacks</option>
             </select>
