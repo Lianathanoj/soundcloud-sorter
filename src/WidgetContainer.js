@@ -7,9 +7,15 @@ class WidgetContainer extends Component {
     }
 
     render() {
+        // console.log(this.props.widgetsMap);
+        // console.log('numSongs: ' + this.props.numSongs);
+        let widgets = [];
+        for (let i = 0; i < this.props.numSongs; i++) {
+            widgets.push(this.props.widgetsMap[i]);
+        }
         return (
             <div>
-                {this.props.widgets.map(widget => <SongWidget widget={widget}/>)}
+                {widgets.map(widget => <SongWidget widget={widget}/>)}
             </div>
         );
     }

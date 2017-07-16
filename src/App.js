@@ -19,7 +19,7 @@ class App extends Component {
           numSongsToLoad: 5,
           sortType: DEFAULT,
           searchText: "",
-          widgets: []
+          widgetsMap: {}
       };
       this.initializeSoundCloud();
   }
@@ -37,7 +37,6 @@ class App extends Component {
 
   handleSearchBarSubmit = () => {
       this.getTracks();
-      // this.setState({ searchText: "" });
   }
 
   handleNumberInputChange = (number) => {
@@ -45,13 +44,21 @@ class App extends Component {
   }
 
   handleCategorySelectorChange = (category) => {
-      this.setState({ sortType: category });
-      this.sortTracks();
-      this.createWidgets();
+      this.setState({ sortType: category, widgetsMap: {}, numSongs: 0 },
+          () => {
+              if (this.state.tracks == null) {
+                  this.getTracks();
+              } else {
+                  this.sortTracks();
+                  this.createWidgets();
+              }
+      });
   }
 
   sortTracks = () => {
-      if (this.state.sortType === MOST_FAVORITES) {
+      if (this.state.sortType === DEFAULT) {
+          this.setState({ tracks: this.state.defaultTracks });
+      } else if (this.state.sortType === MOST_FAVORITES) {
           this.state.tracks.sort(this.sortFavorites);
       } else if (this.state.sortType === MOST_PLAYBACKS) {
           this.state.tracks.sort(this.sortPlaybacks);
@@ -59,29 +66,28 @@ class App extends Component {
   }
 
   getTracks = () => {
-      console.log('test');
-      SC.resolve("https://soundcloud.com/" + this.state.searchText + "/tracks").then(returnedTracks => {
-          this.setState({ tracks: returnedTracks })
-          // this.sortTracks();
-          // this.createWidgets();
-      }).then(() => this.sortTracks()).then(() => this.createWidgets());
+      SC.resolve("https://soundcloud.com/" + this.state.searchText + "/tracks")
+          .then(returnedTracks => this.setState({ tracks: returnedTracks, defaultTracks: returnedTracks }))
+          .then(() => this.sortTracks())
+          .then(() => this.createWidgets());
   }
 
   createWidgets = () => {
       let numSongsAfterLoad = ~~this.state.numSongs + ~~this.state.numSongsToLoad;
       for (let i = this.state.numSongs; i < numSongsAfterLoad; i++) {
           SC.oEmbed(this.state.tracks[i].permalink_url, {maxheight: 200}).then(widget => {
-              this.setState({widgets: [...this.state.widgets, widget]});
+              let widgetsMap = this.state.widgetsMap;
+              widgetsMap[i] = widget;
+              this.setState({widgetsMap: widgetsMap});
           });
       }
       this.setState({ numSongs: numSongsAfterLoad });
-      console.log('num songs: ' + this.state.numSongs);
   }
 
   sortFavorites = (x, y) => y.favoritings_count - x.favoritings_count;
 
   sortPlaybacks = (x, y) => y.playback_count - x.playback_count;
-    // <script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
+
   render() {
     return (
       <div className="App">
@@ -92,7 +98,7 @@ class App extends Component {
         <SearchBar handleChange={this.handleSearchBarChange} handleSubmit={this.handleSearchBarSubmit} searchText={this.state.searchText}/>
         <CategorySelector handleChange={this.handleCategorySelectorChange} currentSelection={this.state.sortType}/>
         <NumberInput handleChange={this.handleNumberInputChange} numSongsToLoad={this.state.numSongsToLoad}/>
-        <WidgetContainer widgets={this.state.widgets}/>
+        <WidgetContainer numSongs={this.state.numSongs} widgetsMap={this.state.widgetsMap}/>
       </div>
     );
   }
