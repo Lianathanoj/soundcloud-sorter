@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class NumberInput extends Component {
     constructor(props) {
@@ -18,8 +20,8 @@ class NumberInput extends Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <input placeholder="Number of Songs" value={this.props.numSongsToLoad} onChange={this.handleChange} />
-                <input type="submit" value="Submit" />
+                <TextField placeholder="Number of Songs" value={this.props.numSongsToLoad} onChange={this.handleChange} />
+                <RaisedButton type="submit" label="Submit" />
             </form>
         );
     }

@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
+import MenuItem from 'material-ui/MenuItem';
+import SelectField from 'material-ui/SelectField';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+injectTapEventPlugin();
 
 class CategorySelector extends Component {
     constructor(props) {
         super(props);
     }
 
-    handleChange = (e) => {
-        this.props.handleChange(e.target.value);
+    handleChange = (event, index, value) => {
+        this.props.handleChange(value);
     }
 
     render() {
         return (
-            <select value={this.props.currentSelection} onChange={this.handleChange}>
-                <option value="favorites">Sort by most favorites</option>
-                <option value="playbacks">Sort by most playbacks</option>
-            </select>
+            <div>
+                <SelectField value={this.props.currentSelection} onChange={this.handleChange}>
+                    <MenuItem value={"favorites"} primaryText="Sort by most favorites"/>
+                    <MenuItem value={"playbacks"} primaryText="Sort by most playbacks"/>
+                </SelectField>
+            </div>
         );
     }
 }

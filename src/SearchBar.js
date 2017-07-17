@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-var axios = require('axios');
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 class SearchBar extends Component {
     constructor(props) {
@@ -20,8 +21,8 @@ class SearchBar extends Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <input placeholder="Input an artist's profile URL." value={this.props.searchText} onChange={this.handleChange} />
-                <input type="submit" value="Submit" />
+                <TextField placeholder="Input an artist's profile URL." value={this.props.searchText} onChange={this.handleChange} />
+                <RaisedButton type="submit" label="submit"/>
             </form>
         );
     }

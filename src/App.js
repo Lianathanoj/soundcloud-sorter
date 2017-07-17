@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import logo from './logo.svg';
 import './App.css';
 import CategorySelector from './CategorySelector';
@@ -97,16 +98,18 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>SoundCloud Specific Song Sorter</h2>
-        </div>
-        <SearchBar handleChange={this.handleSearchBarChange} handleSubmit={this.handleSearchBarSubmit} searchText={this.state.searchText}/>
-        <CategorySelector handleChange={this.handleCategorySelectorChange} currentSelection={this.state.sortType}/>
-        <NumberInput handleChange={this.handleNumberInputChange} handleSubmit={this.handleNumberInputSubmit} numSongsToLoad={this.state.numSongsToLoad}/>
-        <WidgetContainer numSongs={this.state.numSongs} widgetsMap={this.state.widgetsMap}/>
-      </div>
+      <MuiThemeProvider>
+          <div className="App">
+            <div className="App-header">
+              <img src={logo} className="App-logo" alt="logo" />
+              <h2>SoundCloud Specific Song Sorter</h2>
+            </div>
+            <SearchBar handleChange={this.handleSearchBarChange} handleSubmit={this.handleSearchBarSubmit} searchText={this.state.searchText}/>
+            <CategorySelector handleChange={this.handleCategorySelectorChange} currentSelection={this.state.sortType}/>
+            <NumberInput handleChange={this.handleNumberInputChange} handleSubmit={this.handleNumberInputSubmit} numSongsToLoad={this.state.numSongsToLoad}/>
+            <WidgetContainer numSongs={this.state.numSongs} widgetsMap={this.state.widgetsMap}/>
+          </div>
+      </MuiThemeProvider>
     );
   }
 }
