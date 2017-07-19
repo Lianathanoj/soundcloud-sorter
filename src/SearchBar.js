@@ -21,7 +21,11 @@ class SearchBar extends Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <TextField placeholder="Input an artist's profile URL." value={this.props.searchText} onChange={this.handleChange} />
+                <TextField
+                    placeholder="Input an artist's profile URL."
+                    value={this.props.searchText}
+                    onChange={this.handleChange}
+                />
                 <RaisedButton type="submit" label="submit"/>
             </form>
         );

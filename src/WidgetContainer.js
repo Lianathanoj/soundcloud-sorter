@@ -28,7 +28,11 @@ class WidgetContainer extends Component {
                     <TableHeader>
                         <TableRow>
                             <TableHeaderColumn>Song</TableHeaderColumn>
-                            <TableHeaderColumn>Favoritings Count</TableHeaderColumn>
+                            <TableHeaderColumn>
+                                {this.props.sortType === MOST_FAVORITES
+                                    ? "Favoritings Count"
+                                    : "Playback Count"}
+                            </TableHeaderColumn>
                             <TableHeaderColumn>Widget</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>

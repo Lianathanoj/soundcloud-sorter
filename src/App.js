@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import logo from './logo.svg';
+import logo from './logo.png';
 import './App.css';
 import CategorySelector from './CategorySelector';
 import SearchBar from './SearchBar';
@@ -101,12 +101,13 @@ class App extends Component {
       <MuiThemeProvider>
           <div className="App">
             <div className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
-              <h2>SoundCloud Specific Song Sorter</h2>
+              <link href="https://fonts.googleapis.com/css?family=Roboto:400" rel="stylesheet"/>
+              <img src={logo} className="logo" alt="logo" />
+              <h2>SoundCloud Song Sorter</h2>
             </div>
             <SearchBar handleChange={this.handleSearchBarChange} handleSubmit={this.handleSearchBarSubmit} searchText={this.state.searchText}/>
-            <CategorySelector handleChange={this.handleCategorySelectorChange} currentSelection={this.state.sortType}/>
             <NumberInput handleChange={this.handleNumberInputChange} handleSubmit={this.handleNumberInputSubmit} numSongsToLoad={this.state.numSongsToLoad}/>
+            <CategorySelector handleChange={this.handleCategorySelectorChange} currentSelection={this.state.sortType}/>
             <WidgetContainer numSongs={this.state.numSongs} widgetsMap={this.state.widgetsMap} tracks={this.state.tracks} sortType={this.state.sortType}/>
           </div>
       </MuiThemeProvider>

@@ -20,8 +20,12 @@ class NumberInput extends Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <TextField placeholder="Number of Songs" value={this.props.numSongsToLoad} onChange={this.handleChange} />
-                <RaisedButton type="submit" label="Submit" />
+                <TextField
+                    placeholder="# Songs"
+                    value={this.props.numSongsToLoad}
+                    onChange={this.handleChange}
+                />
+                <RaisedButton type="submit" label="Add" />
             </form>
         );
     }
