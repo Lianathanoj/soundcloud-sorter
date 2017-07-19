@@ -107,7 +107,7 @@ class App extends Component {
             <SearchBar handleChange={this.handleSearchBarChange} handleSubmit={this.handleSearchBarSubmit} searchText={this.state.searchText}/>
             <CategorySelector handleChange={this.handleCategorySelectorChange} currentSelection={this.state.sortType}/>
             <NumberInput handleChange={this.handleNumberInputChange} handleSubmit={this.handleNumberInputSubmit} numSongsToLoad={this.state.numSongsToLoad}/>
-            <WidgetContainer numSongs={this.state.numSongs} widgetsMap={this.state.widgetsMap}/>
+            <WidgetContainer numSongs={this.state.numSongs} widgetsMap={this.state.widgetsMap} tracks={this.state.tracks} sortType={this.state.sortType}/>
           </div>
       </MuiThemeProvider>
     );
