@@ -16,7 +16,7 @@ class App extends Component {
       super(props);
       this.state = {
           numSongs: 0,
-          numSongsToLoad: 5,
+          numSongsToLoad: "5 Songs",
           sortType: MOST_FAVORITES,
           searchText: "",
           widgetsMap: {}
@@ -41,6 +41,18 @@ class App extends Component {
 
   handleNumberInputChange = (number) => {
       this.setState({ numSongsToLoad: number });
+  }
+
+  handleNumberInputFocus = (event) => {
+      if (event.includes(" Songs")) {
+          this.setState({ numSongsToLoad: event.slice(0, event.length - 6)});
+      }
+  }
+
+  handleNumberInputBlur = () => {
+      if (!this.state.numSongsToLoad.includes(" Songs")) {
+          this.setState({ numSongsToLoad: this.state.numSongsToLoad.replace(/\D/g, "") + " Songs"} );
+      }
   }
 
   handleNumberInputSubmit = (number) => {
@@ -81,7 +93,7 @@ class App extends Component {
   }
 
   createWidgets = () => {
-      let numSongsAfterLoad = ~~this.state.numSongs + ~~this.state.numSongsToLoad;
+      let numSongsAfterLoad = ~~this.state.numSongs + ~~this.state.numSongsToLoad.replace(/\D/g, "").trim();
       for (let i = this.state.numSongs; i < numSongsAfterLoad; i++) {
           SC.oEmbed(this.state.tracks[i].permalink_url, {maxheight: 200}).then(widget => {
               let widgetsMap = this.state.widgetsMap;
@@ -106,7 +118,7 @@ class App extends Component {
               <h2>SoundCloud Song Sorter</h2>
             </div>
             <SearchBar handleChange={this.handleSearchBarChange} handleSubmit={this.handleSearchBarSubmit} searchText={this.state.searchText}/>
-            <NumberInput handleChange={this.handleNumberInputChange} handleSubmit={this.handleNumberInputSubmit} numSongsToLoad={this.state.numSongsToLoad}/>
+            <NumberInput handleChange={this.handleNumberInputChange} onBlur={this.handleNumberInputBlur} onFocus={this.handleNumberInputFocus} handleSubmit={this.handleNumberInputSubmit} numSongsToLoad={this.state.numSongsToLoad}/>
             <CategorySelector handleChange={this.handleCategorySelectorChange} currentSelection={this.state.sortType}/>
             <WidgetContainer numSongs={this.state.numSongs} widgetsMap={this.state.widgetsMap} tracks={this.state.tracks} sortType={this.state.sortType}/>
           </div>

@@ -8,7 +8,8 @@ class NumberInput extends Component {
     }
 
     handleChange = (e) => {
-        e.target.value == null ? this.props.handleChange(0) : this.props.handleChange(e.target.value);
+        let input = e.target.value;
+        input == null ? this.props.handleChange(0) : this.props.handleChange(input);
     }
 
     handleSubmit = (e) => {
@@ -16,6 +17,13 @@ class NumberInput extends Component {
         this.props.handleSubmit();
     }
 
+    onFocus = (e) => {
+        this.props.onFocus(e.target.value);
+    }
+
+    onBlur = (e) => {
+        this.props.onBlur();
+    }
 
     render() {
         return (
@@ -24,6 +32,8 @@ class NumberInput extends Component {
                     placeholder="# Songs"
                     value={this.props.numSongsToLoad}
                     onChange={this.handleChange}
+                    onFocus={this.onFocus}
+                    onBlur={this.onBlur}
                 />
                 <RaisedButton type="submit" label="Add" />
             </form>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './App.css';
 import SongWidget from './SongWidget';
 import {
     Table,
@@ -11,10 +12,17 @@ import {
 
 const MOST_FAVORITES = "favorites";
 const MOST_PLAYBACKS = "playbacks";
+var columnStyle = {
+    textAlign: 'center'
+};
 
 class WidgetContainer extends Component {
+
     constructor(props) {
         super(props);
+        this.state = {
+            showCheckboxes: false
+        };
     }
 
     render() {
@@ -25,28 +33,37 @@ class WidgetContainer extends Component {
         return (
             <div>
                 <Table>
-                    <TableHeader>
+                    <TableHeader
+                        displaySelectAll={this.state.showCheckboxes}
+                        adjustForCheckbox={this.state.showCheckboxes}
+                    >
                         <TableRow>
-                            <TableHeaderColumn>Song</TableHeaderColumn>
-                            <TableHeaderColumn>
+                            <TableHeaderColumn style={columnStyle}>Song</TableHeaderColumn>
+                            <TableHeaderColumn style={columnStyle}>
                                 {this.props.sortType === MOST_FAVORITES
                                     ? "Favoritings Count"
                                     : "Playback Count"}
                             </TableHeaderColumn>
-                            <TableHeaderColumn>Widget</TableHeaderColumn>
+                            <TableHeaderColumn style={columnStyle}>Widget</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
-                    <TableBody>
+                    <TableBody
+                        displayRowCheckbox={this.state.showCheckboxes}
+                    >
                         {widgets.map((widget, index) =>  {
                             return (
                                 <TableRow>
-                                    <TableRowColumn>{widget.title}</TableRowColumn>
-                                    <TableRowColumn>
+                                    <TableRowColumn style={columnStyle}>
+                                        {widget.title}
+                                    </TableRowColumn>
+                                    <TableRowColumn style={columnStyle}>
                                         {this.props.sortType === MOST_FAVORITES
                                         ? this.props.tracks[index].favoritings_count
                                         : this.props.tracks[index].playback_count}
                                     </TableRowColumn>
-                                    <TableRowColumn><SongWidget widget={widget}/></TableRowColumn>
+                                    <TableRowColumn style={columnStyle}>
+                                        <SongWidget widget={widget}/>
+                                    </TableRowColumn>
                                 </TableRow>
                             );
                         })}
