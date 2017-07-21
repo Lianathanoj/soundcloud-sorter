@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import {orange500} from 'material-ui/styles/colors';
+
+const styles = {
+    underlineStyle: {
+        borderColor: orange500
+    }
+};
 
 class NumberInput extends Component {
     constructor(props) {
@@ -34,6 +41,8 @@ class NumberInput extends Component {
                     onChange={this.handleChange}
                     onFocus={this.onFocus}
                     onBlur={this.onBlur}
+                    underlineStyle={styles.underlineStyle}
+                    underlineFocusStyle={styles.underlineStyle}
                 />
                 <RaisedButton type="submit" label="Add" />
             </form>

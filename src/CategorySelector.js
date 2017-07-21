@@ -17,7 +17,11 @@ class CategorySelector extends Component {
     render() {
         return (
             <div>
-                <SelectField value={this.props.currentSelection} onChange={this.handleChange}>
+                <SelectField
+                    value={this.props.currentSelection}
+                    onChange={this.handleChange}
+                    selectedMenuItemStyle={{color: '#E84C06'}}
+                >
                     <MenuItem value={"favorites"} primaryText="Sort by most favorites"/>
                     <MenuItem value={"playbacks"} primaryText="Sort by most playbacks"/>
                 </SelectField>

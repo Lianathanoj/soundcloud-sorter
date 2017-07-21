@@ -19,7 +19,8 @@ class App extends Component {
           numSongsToLoad: "5 Songs",
           sortType: MOST_FAVORITES,
           searchText: "",
-          widgetsMap: {}
+          widgetsMap: {},
+          widgetsExist: false
       };
       this.initializeSoundCloud();
   }
@@ -102,6 +103,7 @@ class App extends Component {
           });
       }
       this.setState({ numSongs: numSongsAfterLoad });
+      this.setState({ widgetsExist: true });
   }
 
   sortFavorites = (x, y) => y.favoritings_count - x.favoritings_count;
@@ -117,10 +119,12 @@ class App extends Component {
               <img src={logo} className="logo" alt="logo" />
               <h2>SoundCloud Song Sorter</h2>
             </div>
-            <SearchBar handleChange={this.handleSearchBarChange} handleSubmit={this.handleSearchBarSubmit} searchText={this.state.searchText}/>
-            <NumberInput handleChange={this.handleNumberInputChange} onBlur={this.handleNumberInputBlur} onFocus={this.handleNumberInputFocus} handleSubmit={this.handleNumberInputSubmit} numSongsToLoad={this.state.numSongsToLoad}/>
-            <CategorySelector handleChange={this.handleCategorySelectorChange} currentSelection={this.state.sortType}/>
-            <WidgetContainer numSongs={this.state.numSongs} widgetsMap={this.state.widgetsMap} tracks={this.state.tracks} sortType={this.state.sortType}/>
+            <div>
+                <SearchBar handleChange={this.handleSearchBarChange} handleSubmit={this.handleSearchBarSubmit} searchText={this.state.searchText}/>
+                <NumberInput handleChange={this.handleNumberInputChange} onBlur={this.handleNumberInputBlur} onFocus={this.handleNumberInputFocus} handleSubmit={this.handleNumberInputSubmit} numSongsToLoad={this.state.numSongsToLoad}/>
+                <CategorySelector handleChange={this.handleCategorySelectorChange} currentSelection={this.state.sortType}/>
+                <WidgetContainer widgetsExist={this.state.widgetsExist} numSongs={this.state.numSongs} widgetsMap={this.state.widgetsMap} tracks={this.state.tracks} sortType={this.state.sortType}/>
+            </div>
           </div>
       </MuiThemeProvider>
     );

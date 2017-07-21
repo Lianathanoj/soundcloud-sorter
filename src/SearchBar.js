@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import {orange500} from 'material-ui/styles/colors';
+
+const styles = {
+    underlineStyle: {
+        borderColor: orange500
+    }
+};
 
 class SearchBar extends Component {
     constructor(props) {
@@ -22,9 +29,11 @@ class SearchBar extends Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <TextField
-                    placeholder="Input an artist's profile URL."
+                    placeholder="Input an artist's permalink."
                     value={this.props.searchText}
                     onChange={this.handleChange}
+                    underlineStyle={styles.underlineStyle}
+                    underlineFocusStyle={styles.underlineStyle}
                 />
                 <RaisedButton type="submit" label="submit"/>
             </form>

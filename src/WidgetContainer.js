@@ -12,9 +12,6 @@ import {
 
 const MOST_FAVORITES = "favorites";
 const MOST_PLAYBACKS = "playbacks";
-var columnStyle = {
-    textAlign: 'center'
-};
 
 class WidgetContainer extends Component {
 
@@ -30,47 +27,52 @@ class WidgetContainer extends Component {
         for (let i = 0; i < this.props.numSongs; i++) {
             widgets.push(this.props.widgetsMap[i]);
         }
-        return (
-            <div>
-                <Table>
-                    <TableHeader
-                        displaySelectAll={this.state.showCheckboxes}
-                        adjustForCheckbox={this.state.showCheckboxes}
-                    >
-                        <TableRow>
-                            <TableHeaderColumn style={columnStyle}>Song</TableHeaderColumn>
-                            <TableHeaderColumn style={columnStyle}>
-                                {this.props.sortType === MOST_FAVORITES
-                                    ? "Favoritings Count"
-                                    : "Playback Count"}
-                            </TableHeaderColumn>
-                            <TableHeaderColumn style={columnStyle}>Widget</TableHeaderColumn>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody
-                        displayRowCheckbox={this.state.showCheckboxes}
-                    >
-                        {widgets.map((widget, index) =>  {
-                            return (
-                                <TableRow>
-                                    <TableRowColumn style={columnStyle}>
-                                        {widget.title}
-                                    </TableRowColumn>
-                                    <TableRowColumn style={columnStyle}>
-                                        {this.props.sortType === MOST_FAVORITES
-                                        ? this.props.tracks[index].favoritings_count
-                                        : this.props.tracks[index].playback_count}
-                                    </TableRowColumn>
-                                    <TableRowColumn style={columnStyle}>
-                                        <SongWidget widget={widget}/>
-                                    </TableRowColumn>
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </div>
-        );
+        if (this.props.widgetsExist) {
+            return (
+                <div>
+                    <Table>
+                        <TableHeader
+                            displaySelectAll={this.state.showCheckboxes}
+                            adjustForCheckbox={this.state.showCheckboxes}
+                        >
+                            <TableRow>
+                                <TableHeaderColumn style={{width: '30%', textAlign: 'center'}}>Song</TableHeaderColumn>
+                                <TableHeaderColumn style={{width: '10%', textAlign: 'center'}}>
+                                    {this.props.sortType === MOST_FAVORITES
+                                        ? "Favoritings Count"
+                                        : "Playback Count"}
+                                </TableHeaderColumn>
+                                <TableHeaderColumn
+                                    style={{width: '50%', textAlign: 'center'}}>Widget</TableHeaderColumn>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody
+                            displayRowCheckbox={this.state.showCheckboxes}
+                        >
+                            {widgets.map((widget, index) => {
+                                return (
+                                    <TableRow>
+                                        <TableRowColumn style={{width: '30%', textAlign: 'center'}}>
+                                            {widget.title}
+                                        </TableRowColumn>
+                                        <TableRowColumn style={{width: '10%', textAlign: 'center'}}>
+                                            {this.props.sortType === MOST_FAVORITES
+                                                ? this.props.tracks[index].favoritings_count
+                                                : this.props.tracks[index].playback_count}
+                                        </TableRowColumn>
+                                        <TableRowColumn style={{width: '50%', textAlign: 'center'}}>
+                                            <SongWidget widget={widget}/>
+                                        </TableRowColumn>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </div>
+            );
+        } else {
+            return null;
+        }
     }
 }
 

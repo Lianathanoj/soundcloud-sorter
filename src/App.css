@@ -3,10 +3,6 @@
   font-family: 'Roboto', 'sans-serif';
 }
 
-.center-align {
-  textAlign: 'center';
-}
-
 .logo {
   animation: logo-spin infinite 5s linear;
   height: 80px;
