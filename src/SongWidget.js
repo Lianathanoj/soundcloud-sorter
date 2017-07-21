@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-var SC = require('soundcloud');
 
-class SongWidget extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    createMarkup = () => {
+class SongWidget extends Component {createMarkup = () => {
         return {__html: this.props.widget.html }
     }
 

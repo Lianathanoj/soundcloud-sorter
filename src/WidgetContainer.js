@@ -11,7 +11,6 @@ import {
 } from 'material-ui/Table';
 
 const MOST_FAVORITES = "favorites";
-const MOST_PLAYBACKS = "playbacks";
 
 class WidgetContainer extends Component {
 
@@ -51,7 +50,7 @@ class WidgetContainer extends Component {
                         >
                             {widgets.map((widget, index) => {
                                 return (
-                                    <TableRow>
+                                    <TableRow key={index}>
                                         <TableRowColumn style={{width: '30%', textAlign: 'center'}}>
                                             {widget.title}
                                         </TableRowColumn>

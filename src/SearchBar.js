@@ -10,10 +10,6 @@ const styles = {
 };
 
 class SearchBar extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     handleSubmit = (e) => {
         e.preventDefault();
         if (this.props.searchText.length !== 0) {

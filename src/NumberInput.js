@@ -10,10 +10,6 @@ const styles = {
 };
 
 class NumberInput extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     handleChange = (e) => {
         let input = e.target.value;
         input == null ? this.props.handleChange(0) : this.props.handleChange(input);

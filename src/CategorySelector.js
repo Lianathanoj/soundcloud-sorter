@@ -6,10 +6,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 class CategorySelector extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     handleChange = (event, index, value) => {
         this.props.handleChange(value);
     }
