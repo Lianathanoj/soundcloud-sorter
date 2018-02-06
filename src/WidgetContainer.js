@@ -49,21 +49,23 @@ class WidgetContainer extends Component {
                             displayRowCheckbox={this.state.showCheckboxes}
                         >
                             {widgets.map((widget, index) => {
-                                return (
-                                    <TableRow key={index}>
-                                        <TableRowColumn style={{width: '30%', textAlign: 'center'}}>
-                                            {widget.title}
-                                        </TableRowColumn>
-                                        <TableRowColumn style={{width: '10%', textAlign: 'center'}}>
-                                            {this.props.sortType === MOST_FAVORITES
-                                                ? this.props.tracks[index].favoritings_count
-                                                : this.props.tracks[index].playback_count}
-                                        </TableRowColumn>
-                                        <TableRowColumn style={{width: '50%', textAlign: 'center'}}>
-                                            <SongWidget widget={widget}/>
-                                        </TableRowColumn>
-                                    </TableRow>
-                                );
+                                if (widget) {
+                                    return (
+                                        <TableRow key={index}>
+                                            <TableRowColumn style={{width: '30%', textAlign: 'center'}}>
+                                                {widget.title}
+                                            </TableRowColumn>
+                                            <TableRowColumn style={{width: '10%', textAlign: 'center'}}>
+                                                {this.props.sortType === MOST_FAVORITES
+                                                    ? this.props.tracks[index].favoritings_count
+                                                    : this.props.tracks[index].playback_count}
+                                            </TableRowColumn>
+                                            <TableRowColumn style={{width: '50%', textAlign: 'center'}}>
+                                                <SongWidget widget={widget}/>
+                                            </TableRowColumn>
+                                        </TableRow>
+                                    );
+                                }
                             })}
                         </TableBody>
                     </Table>
