@@ -24,10 +24,6 @@ class NumberInput extends Component {
         this.props.onFocus(e.target.value);
     }
 
-    onBlur = (e) => {
-        this.props.onBlur();
-    }
-
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
@@ -36,7 +32,6 @@ class NumberInput extends Component {
                     value={this.props.numSongsToLoad}
                     onChange={this.handleChange}
                     onFocus={this.onFocus}
-                    onBlur={this.onBlur}
                     underlineStyle={styles.underlineStyle}
                     underlineFocusStyle={styles.underlineStyle}
                 />
